@@ -2,6 +2,8 @@
 import scrapy
 from bitinfo.items import BitinfoItem
 import json
+import time
+
 from lxml import etree
 
 
@@ -16,8 +18,6 @@ def html_to_str(data):
 class BitnoSpider(scrapy.Spider):
     name = 'bitno'
     allowed_domains = ['bitinfocharts.com']
-
-    start_urls = []
     jiaoyi_list = ['Batcoin', 'BitConnect', 'Siacoin', 'Bitgem', 'DigiByte',
                    'Whitecoin_', 'Syscoin', 'AIRcoin', 'Cloakcoin', 'Viacoin',
                    'Einsteinium', 'Potcoin', 'Iconomi', 'WhiteCoin', 'Navajocoin', 'Unobtanium',
@@ -29,9 +29,10 @@ class BitnoSpider(scrapy.Spider):
                    'Nyancoin', 'Ultracoin', 'Quatloo', 'Quarkcoin', 'Sexcoin', 'Polcoin',
                    ]
 
-    for jiaoyisuo in jiaoyi_list:
-        url = 'https://bitinfocharts.com/zh/%s/c.json' % jiaoyisuo
-        start_urls.append(url)
+    def start_requests(self):
+        for jiaoyisuo in self.jiaoyi_list:
+            yield scrapy.Request(url='https://bitinfocharts.com/zh/%s/c.json' % jiaoyisuo,
+                                 callback=self.parse)
 
     def parse(self, response):
         data = json.loads(response.body.decode('utf8'))

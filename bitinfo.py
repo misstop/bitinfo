@@ -5,7 +5,7 @@ import os
 import json
 import subprocess
 
-CYCLE_TIME = 1 * 60
+CYCLE_TIME = 5 * 60
 
 # cmdline.execute("scrapy crawl huobipro.com".split())
 spiders = 'bit bitno'.split(' ')

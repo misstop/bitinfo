@@ -130,3 +130,8 @@ RETRY_TIMES = 0
 # 日志
 LOG_FILE = 'bitinfo.log'
 LOG_LEVEL = 'INFO'
+
+# 下载延时
+DOWNLOAD_DELAY = 5
+
+
